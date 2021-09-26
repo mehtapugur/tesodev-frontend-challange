@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 :root{
   --clr-primary-white: rgb(255,255,255);
   --clr-primary-black: rgb(0,0,0);
@@ -55,6 +57,7 @@ img {
  font-size: 1.8em;
  font-style: normal;
  font-weight: bold;
+ color: #888888;
 }
 
 .search-section input:hover{
@@ -76,23 +79,30 @@ img {
 
 a {
   text-decoration: none;
-  color: var( --clr-primary-black);
+  color: var(--clr-primary-black);
 }
 
-.search-web-app{
-  /* Search web app */
 /*
-position: absolute;
-width: 220px;
-height: 20px;
-left: 653px;
-top: 262px;
-font-style: normal;
-font-weight: bold;
-font-size: 14px;
-line-height: 16px;
+#dataList {
+  width: 500px;
+  height: 100px;
+  background-color: bisque;
+}
+*/
 
-color: #484848; */
+ul {
+  margin: 2em 0;
+  width: 81.7%;
+  border-radius: 8px;
+  background-color: #eaeaea;
+}
+
+.list-item {
+  list-style-type: none;
+  /*background-color: #eaeaea;*/
+  /*border-radius: 8px;*/
+  padding: 10px 20px;
+  text-align: left;
 }
 
 footer {
