@@ -92,6 +92,8 @@ a {
 
 ul {
   margin: 2em 0;
+  padding: 2em;
+  padding-bottom: 0;
   width: 81.7%;
   border-radius: 8px;
   background-color: #eaeaea;
@@ -102,17 +104,26 @@ ul {
   list-style-type: none;
   /*background-color: #eaeaea;*/
   /*border-radius: 8px;*/
-  padding: 10px 20px;
+  padding: 10px 0px;
+  margin: 1em;
   align-items: center;
   text-align: left;
+  height: 7em;
+  border-bottom: 1px solid #585858;
+  transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
 .list-item div {
   width: 50%;
 }
 
+.list-item h2{
+  font-size: 1.7em;
+}
+
 #showMore {
   /*width: 100%;*/
+  list-style-type: none;
   background-color: bisque;
   display: flex;
   justify-content: center;
@@ -121,12 +132,13 @@ ul {
   font-weight: bold;
   font-size: 1.3em;
   line-height: 1.5em;
+  padding-top: 2em;
 }
 
 footer {
-  position: fixed;
+  position: absolute;
   width: 100vw;
-  bottom: 0;
+  bottom: 0px;
   border-top: 2px solid;
   text-align: center;
   font-size: 1.5em;
