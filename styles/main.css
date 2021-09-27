@@ -98,11 +98,29 @@ ul {
 }
 
 .list-item {
+  display: flex;
   list-style-type: none;
   /*background-color: #eaeaea;*/
   /*border-radius: 8px;*/
   padding: 10px 20px;
+  align-items: center;
   text-align: left;
+}
+
+.list-item div {
+  width: 50%;
+}
+
+#showMore {
+  /*width: 100%;*/
+  background-color: bisque;
+  display: flex;
+  justify-content: center;
+  color: var(--clr-primary-black);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.3em;
+  line-height: 1.5em;
 }
 
 footer {
