@@ -24,17 +24,23 @@ img {
    
  }
 
+ .search-button {
+   background-color: var(--clr-blue);
+ }
+
  main {
    align-self: flex-start;
    margin-left: 20.7em;
  }
 
- .containr {
-   max-width: 80%;
+ .container {
+   max-width: 90%;
  }
 
  ul {
-  width: 55vw;
+  width: 58vw;
+  min-width: 80%;
   margin-top: 5em;
   border: none;
+  flex-basis: 0;
 }
