@@ -22,7 +22,6 @@ const loadList = async () => {
 
 loadList();
 */
-
 const dataList = document.getElementById("dataList");
 const searchBar = document.getElementById("searchBar");
 //console.log(dataList);
@@ -94,6 +93,7 @@ const displayFilteredData = (items) => {
   if (items.length > 3) {
     //console.log(items.length);
     let liDOM = document.createElement("li");
+    liDOM.style["list-style-type"] = "none";
     liDOM.innerHTML = `<a id="showMore" href="">Show more...</a>`;
     dataList.append(liDOM);
   }
@@ -102,6 +102,8 @@ const displayFilteredData = (items) => {
     searchBar.style["outline"] = "none";
     searchBar.style["border"] = "2px solid red";
     searchBar.style["color"] = "red";
+  } else {
+    dataList.style["border"] = "1px solid var(--clr-black2)";
   }
 
   //var li = document.createElement("li");
