@@ -22,6 +22,8 @@ const loadList = async () => {
 
 loadList();
 */
+
+/* BU ILK --------
 const dataList = document.getElementById("dataList");
 const searchBar = document.getElementById("searchBar");
 //console.log(dataList);
@@ -133,3 +135,136 @@ const displayFilteredData = (items) => {
 };
 */
 loadList();
+
+
+******* */
+
+// YENİ HALİ:
+const dataList = document.getElementById("dataList");
+const searchBar = document.getElementById("searchBar");
+//console.log(dataList);
+let dataResults = [];
+/*
+searchBar.addEventListener("keyup", (e) => {
+  console.log(e.target.value);
+  const searchString = e.target.value.toLowerCase();
+  //console.log(searchString);
+
+  const filteredData = dataResults.data.filter((item) => {
+    return item.data;
+  });
+
+  displayFilteredData(filteredData);
+}); */
+
+let filteredData = [];
+
+searchBar.addEventListener("keyup", (e) => {
+  console.log(e.target.value);
+  const searchString = e.target.value.toLowerCase();
+  filteredData = dataResults.data.filter((item) => {
+    //console.log(item[0]);
+    return (
+      item[0].toLowerCase().includes(searchString) ||
+      item[4].toLowerCase().includes(searchString) ||
+      item[5].toLowerCase().includes(searchString)
+    );
+  });
+
+  displayFilteredData(filteredData);
+
+  //localStorage.setItem("str", searchString);
+});
+
+// json dosyasına ulaşıp datanın yazdırılması
+const loadList = async () => {
+  try {
+    const res = await fetch(".././assets/mockData.json");
+    dataResults = await res.json();
+    //displayFilteredData(dataResults.data);
+    console.log(dataResults);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const displayFilteredData = (items) => {
+  const strData = items
+    .slice(0, 3)
+    .map((item) => {
+      return `
+      <li class="list-item">
+      <div>
+        <h2>${item[5]} - ${item[4]}</h2>
+        <p>${item[0]} - ${item[3].slice(6, 10)}</p>
+      </div>
+        <h2>Email: ${item[2]}</h2>
+      </li>
+    `;
+      //dataList.append(li);
+    })
+    .join("");
+
+  dataList.innerHTML = strData;
+
+  if (items.length > 3) {
+    //console.log(items.length);
+    let liDOM = document.createElement("li");
+    liDOM.style["list-style-type"] = "none";
+    liDOM.innerHTML = `<a id="showMore" href="new-page.html">Show more...</a>`;
+    dataList.append(liDOM);
+    showDataTable(items);
+  }
+
+  if (items.length == 0) {
+    searchBar.style["outline"] = "none";
+    searchBar.style["border"] = "2px solid red";
+    searchBar.style["color"] = "red";
+  } else {
+    dataList.style["display"] = "block";
+  }
+};
+
+loadList();
+/*
+searchBar.addEventListener("keyup", (e) => {
+  e.target.value === "" ? (searchBar.style["border-color"] = "black") : "";
+});
+*/
+
+/*
+const showMoreDOM = document.getElementById("showMore");
+showMoreDOM.addEventListener("click", loadTable);
+*/
+
+let tableOk = false;
+
+const loadTable = function () {
+  console.log("click");
+  tableOk = true;
+  //document.getElementById("searchBar").innerHTML = localStorage.getItem("str");
+};
+
+const showDataTable = (filteredData) => {
+  console.log("yes");
+  if (tableOk) {
+    const tableData = filteredData
+      .slice(0, 10)
+      .map((dt) => {
+        return `
+        <li class="list-item">
+        <div>
+          <h2>${dt[5]} - ${dt[4]}</h2>
+          <p>${dt[0]} - ${dt[3].slice(6, 10)}</p>
+        </div>
+          <h2>Email: ${dt[2]}</h2>
+        </li>
+      `;
+        //dataList.append(li);
+      })
+      .join("");
+
+    dataList.innerHTML = tableData;
+  }
+};
+
