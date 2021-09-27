@@ -1,0 +1,40 @@
+header {
+  margin-top: 0.6em;
+  margin-left: 4em;
+  width: 100vw;
+  height: 10em;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+img {
+  height: 75%;
+  align-self: center;
+}
+
+.search-section input {
+  width: 75rem;
+  margin-left: 1em;
+  margin-top: 0;
+ }
+
+ .search-section{
+   /*background-color: aqua;*/
+   
+ }
+
+ main {
+   align-self: flex-start;
+   margin-left: 20.7em;
+ }
+
+ .containr {
+   max-width: 80%;
+ }
+
+ ul {
+  width: 55vw;
+  margin-top: 5em;
+  border: none;
+}
