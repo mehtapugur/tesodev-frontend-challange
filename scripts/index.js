@@ -23,156 +23,28 @@ const loadList = async () => {
 loadList();
 */
 
-/* BU ILK --------
-const dataList = document.getElementById("dataList");
-const searchBar = document.getElementById("searchBar");
-//console.log(dataList);
+const dataList = document.getElementById("dataList"); // ul
+const searchBar = document.getElementById("searchBar"); // search box
+
 let dataResults = [];
-/*
-searchBar.addEventListener("keyup", (e) => {
-  console.log(e.target.value);
-  const searchString = e.target.value.toLowerCase();
-  //console.log(searchString);
-
-  const filteredData = dataResults.data.filter((item) => {
-    return item.data;
-  });
-
-  displayFilteredData(filteredData);
-}); */
-
-searchBar.addEventListener("keyup", (e) => {
-  console.log(e.target.value);
-  const searchString = e.target.value.toLowerCase();
-  //console.log(searchString);
-
-  const filteredData = dataResults.data.filter((item) => {
-    //console.log(item[0]);
-    return (
-      item[0].toLowerCase().includes(searchString) ||
-      //item[1].includes(searchString) ||
-      //item[2].includes(searchString) ||
-      //item[3].includes(searchString) ||
-      item[4].toLowerCase().includes(searchString) ||
-      item[5].toLowerCase().includes(searchString)
-    );
-  });
-
-  displayFilteredData(filteredData);
-});
-
-// json dosyasına ulaşıp datanın yazdırılması
-const loadList = async () => {
-  try {
-    const res = await fetch(".././assets/mockData.json");
-    dataResults = await res.json();
-    //displayFilteredData(dataResults.data);
-    console.log(dataResults);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const displayFilteredData = (items) => {
-  const strData = items
-    .slice(0, 3)
-    .map((item) => {
-      return `
-      <li class="list-item">
-      <div>
-        <h2>${item[5]} - ${item[4]}</h2>
-        <p>${item[0]} - ${item[3].slice(6, 10)}</p>
-      </div>
-        <h2>Email: ${item[2]}</h2>
-      </li>
-    `;
-      //dataList.append(li);
-    })
-    .join("");
-
-  dataList.innerHTML = strData;
-
-  if (items.length > 3) {
-    //console.log(items.length);
-    let liDOM = document.createElement("li");
-    liDOM.style["list-style-type"] = "none";
-    liDOM.innerHTML = `<a id="showMore" href="">Show more...</a>`;
-    dataList.append(liDOM);
-  }
-
-  if (items.length == 0) {
-    searchBar.style["outline"] = "none";
-    searchBar.style["border"] = "2px solid red";
-    searchBar.style["color"] = "red";
-  } else {
-    dataList.style["border"] = "1px solid var(--clr-black2)";
-  }
-
-  //var li = document.createElement("li");
-  //dataList.append(strData);
-
-  //<h2>${item.name}</h2>
-};
-
-/*
-const displayFilteredData = (items) => {
-  const strData = items
-    .map((item) => {
-      return `
-      <li class="list-item">
-        <h2>ok</h2>
-        <p>yes</p>
-      </li>
-    `;
-      //dataList.append(li);
-    })
-    .join("");
-
-  //var li = document.createElement("li");
-  //dataList.append(strData);
-  dataList.innerHTML = strData;
-  //<h2>${item.name}</h2>
-};
-*/
-loadList();
-
-
-******* */
-
-// YENİ HALİ:
-const dataList = document.getElementById("dataList");
-const searchBar = document.getElementById("searchBar");
-//console.log(dataList);
-let dataResults = [];
-/*
-searchBar.addEventListener("keyup", (e) => {
-  console.log(e.target.value);
-  const searchString = e.target.value.toLowerCase();
-  //console.log(searchString);
-
-  const filteredData = dataResults.data.filter((item) => {
-    return item.data;
-  });
-
-  displayFilteredData(filteredData);
-}); */
-
 let filteredData = [];
 
+//klavye girişine göre dinamik arama yapılması
 searchBar.addEventListener("keyup", (e) => {
-  console.log(e.target.value);
+  //case sensitive olmaması için toLowarCase kullandık
   const searchString = e.target.value.toLowerCase();
+  //eşleşen elemanlar alındı
   filteredData = dataResults.data.filter((item) => {
-    //console.log(item[0]);
     return (
+      //ad-soyad, ülke veya şehir, girilen karakterleri içeriyor mu
       item[0].toLowerCase().includes(searchString) ||
       item[4].toLowerCase().includes(searchString) ||
       item[5].toLowerCase().includes(searchString)
     );
   });
 
+  //filtrelenmiş dizi ekrana yazdırılmak için gönderildi
   displayFilteredData(filteredData);
-
   //localStorage.setItem("str", searchString);
 });
 
@@ -181,8 +53,6 @@ const loadList = async () => {
   try {
     const res = await fetch(".././assets/mockData.json");
     dataResults = await res.json();
-    //displayFilteredData(dataResults.data);
-    console.log(dataResults);
   } catch (e) {
     console.log(e);
   }
@@ -190,9 +60,10 @@ const loadList = async () => {
 
 const displayFilteredData = (items) => {
   const strData = items
-    .slice(0, 3)
+    .slice(0, 3) // açılış sayfasında ilk 3 eleman listelenir
     .map((item) => {
-      return `
+      // elemanlar listelendi
+      return ` 
       <li class="list-item">
       <div>
         <h2>${item[5]} - ${item[4]}</h2>
@@ -201,57 +72,70 @@ const displayFilteredData = (items) => {
         <h2>Email: ${item[2]}</h2>
       </li>
     `;
-      //dataList.append(li);
     })
-    .join("");
+    .join(""); //liste elemanalrı birleştirildi
 
-  dataList.innerHTML = strData;
+  dataList.innerHTML = strData; // hazırlanan liste, ul içine eklendi
 
   if (items.length > 3) {
-    //console.log(items.length);
+    // 3ten uzun listeler için show more alanı eklenir
     let liDOM = document.createElement("li");
     liDOM.style["list-style-type"] = "none";
     liDOM.innerHTML = `<a id="showMore" href="new-page.html">Show more...</a>`;
     dataList.append(liDOM);
-    showDataTable(items);
+    showDataTable(items); //items yani filteredData, new-page e gönderildi
   }
 
   if (items.length == 0) {
+    // eşleşmeyen aramalar için error verilmesi
     searchBar.style["outline"] = "none";
     searchBar.style["border"] = "2px solid red";
     searchBar.style["color"] = "red";
   } else {
-    dataList.style["display"] = "block";
+    dataList.style["display"] = "block"; //eşleşme varsa listeyi görüntüle
   }
 };
 
-loadList();
-/*
+loadList(); // sayfa açılınca datalar çekilir
+
+//arama alanı boşsa error kaldırılır
 searchBar.addEventListener("keyup", (e) => {
-  e.target.value === "" ? (searchBar.style["border-color"] = "black") : "";
+  e.target.value === ""
+    ? ((searchBar.style["border-color"] = "black"),
+      (searchBar.style["color"] = "black"))
+    : "";
 });
-*/
 
-/*
-const showMoreDOM = document.getElementById("showMore");
-showMoreDOM.addEventListener("click", loadTable);
-*/
+// ##################### burada kaldım
 
-let tableOk = false;
+let tableOk;
 
 const loadTable = function () {
   console.log("click");
-  tableOk = true;
   //document.getElementById("searchBar").innerHTML = localStorage.getItem("str");
+};
+
+//console.log(tableOk);
+
+// 6 elemanlık tablo sayısı hesaplandı
+const sizeOfTable = (size) => {
+  console.log(size);
+  let numberOfTable = (size / 6) | 0;
+  if (size % 6 > 0) {
+    numberOfTable++;
+  }
+  //console.log(numberOfTable);
+  return numberOfTable;
 };
 
 const showDataTable = (filteredData) => {
   console.log("yes");
-  if (tableOk) {
-    const tableData = filteredData
-      .slice(0, 10)
-      .map((dt) => {
-        return `
+  const countTable = sizeOfTable(filteredData.length);
+
+  const tableData = filteredData
+    .slice(0, 6)
+    .map((dt) => {
+      return `
         <li class="list-item">
         <div>
           <h2>${dt[5]} - ${dt[4]}</h2>
@@ -260,11 +144,17 @@ const showDataTable = (filteredData) => {
           <h2>Email: ${dt[2]}</h2>
         </li>
       `;
-        //dataList.append(li);
-      })
-      .join("");
+    })
+    .join("");
 
-    dataList.innerHTML = tableData;
-  }
+  dataList.innerHTML = tableData;
+
+  let pageListDOM = document.createElement("li");
+  //pageListDOM.style["list-style-type"] = "none";
+  pageListDOM.innerHTML = `
+    <li class="page-numbers"> 
+      <p>${countTable}</p>
+    </li>
+  `;
+  dataList.append(pageListDOM);
 };
-
