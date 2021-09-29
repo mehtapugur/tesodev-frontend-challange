@@ -106,8 +106,6 @@ searchBar.addEventListener("keyup", (e) => {
     : "";
 });
 
-// ##################### burada kaldım
-
 let tableOk;
 
 const loadTable = function () {
@@ -160,7 +158,7 @@ const showDataTable = (filteredData) => {
 };
 
 // ############################################ 
-// ikinci kod, a yı yakalmaya çalısmak
+// ikinci kod, a yakalandi
 
 const dataList = document.getElementById("dataList"); // ul
 const searchBar = document.getElementById("searchBar"); // search box
@@ -220,8 +218,14 @@ const displayFilteredData = (items) => {
     // 3ten uzun listeler için show more alanı eklenir
     let liDOM = document.createElement("li");
     liDOM.style["list-style-type"] = "none";
-    liDOM.innerHTML = `<a id="showMore" href="new-page.html">Show more...</a>`;
+    /*let anchor = document.createElement("a");
+    anchor.setAttribute("href", "");
+    anchor.setAttribute("id", "showMore");
+    anchor.innerText = "ben geldim :)";
+    liDOM.appendChild(anchor); */
+    liDOM.innerHTML = `<a id="showMore" href="new-page.html" onclick="ben()">Show more...</a>`;
     dataList.append(liDOM);
+
     //showDataTable(items); //items yani filteredData, new-page e gönderildi
   }
 
@@ -237,12 +241,19 @@ const displayFilteredData = (items) => {
 };
 
 loadList(); // sayfa açılınca datalar çekilir
+
 /*
-const showMoreDOM = document.querySelector("#showMore");
+const showMoreDOM = document.querySelector("#showMe");
 showMoreDOM.addEventListener("click", function () {
   event.preventDefault();
   console.log("a ya tiklandi");
 });*/
+
+const ben = function () {
+  //event.preventDefault(); //bunu yazinca diğre sayfa açılmıyor, linkin işlevi kesilmiş oluyor
+  console.log("calisti");
+  showDataTable(filteredData);
+};
 
 //arama alanı boşsa error kaldırılır
 searchBar.addEventListener("keyup", (e) => {
@@ -259,7 +270,6 @@ searchBar.addEventListener("keyup", (e) => {
 
 const loadTable = function () {
   console.log("click");
-  return true;
   //document.getElementById("searchBar").innerHTML = localStorage.getItem("str");
 };
 
@@ -306,4 +316,3 @@ const showDataTable = (filteredData) => {
   `;
   dataList.append(pageListDOM);
 };
-
