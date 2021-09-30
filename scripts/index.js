@@ -23,6 +23,8 @@ const loadList = async () => {
 loadList();
 */
 
+
+// ##################### İKİ SAYFALI HALİ
 const dataList = document.getElementById("dataList"); // ul
 const searchBar = document.getElementById("searchBar"); // search box
 
@@ -187,3 +189,182 @@ const showDataTable = (filteredData) => {
   `;
   dataList.append(pageListDOM);
 };
+
+// ######################### TEK SAYFA
+const dataList = document.getElementById("dataList"); // ul
+const searchBar = document.getElementById("searchBar"); // search box
+
+let dataResults = [];
+let filteredData = [];
+
+//klavye girişine göre dinamik arama yapılması
+searchBar.addEventListener("keyup", (e) => {
+  //case sensitive olmaması için toLowarCase kullandık
+  const searchString = e.target.value.toLowerCase();
+  //eşleşen elemanlar alındı
+  filteredData = dataResults.data.filter((item) => {
+    return (
+      //ad-soyad, ülke veya şehir, girilen karakterleri içeriyor mu
+      item[0].toLowerCase().includes(searchString) ||
+      item[4].toLowerCase().includes(searchString) ||
+      item[5].toLowerCase().includes(searchString)
+    );
+  });
+
+  //filtrelenmiş dizi ekrana yazdırılmak için gönderildi
+  displayFilteredData(filteredData);
+  //localStorage.setItem("str", searchString);
+});
+
+// json dosyasına ulaşıp datanın yazdırılması
+const loadList = async () => {
+  try {
+    const res = await fetch(".././assets/mockData.json");
+    dataResults = await res.json();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const displayFilteredData = (items) => {
+  const strData = items
+    .slice(0, 3) // açılış sayfasında ilk 3 eleman listelenir
+    .map((item) => {
+      // elemanlar listelendi
+      return ` 
+      <li class="list-item">
+      <div>
+        <h2>${item[5]} - ${item[4]}</h2>
+        <p>${item[0]} - ${item[3].slice(6, 10)}</p>
+      </div>
+        <h2>Email: ${item[2]}</h2>
+      </li>
+    `;
+    })
+    .join(""); //liste elemanalrı birleştirildi
+
+  dataList.innerHTML = strData; // hazırlanan liste, ul içine eklendi
+
+  if (items.length > 3) {
+    // 3ten uzun listeler için show more alanı eklenir
+    let liDOM = document.createElement("li");
+    liDOM.style["list-style-type"] = "none";
+    /*let anchor = document.createElement("a");
+    anchor.setAttribute("href", "");
+    anchor.setAttribute("id", "showMore");
+    anchor.innerText = "ben geldim :)";
+    liDOM.appendChild(anchor); */
+    //liDOM.innerHTML = `<a id="showMore" href="new-page.html" onclick="ben()">Show more...</a>`;
+    liDOM.innerHTML = `<button id="showMore" onclick="hey(this.id)">Show more...</button>`;
+    dataList.append(liDOM);
+
+    //showDataTable(items); //items yani filteredData, new-page e gönderildi
+  }
+
+  if (items.length == 0) {
+    // eşleşmeyen aramalar için error verilmesi
+    searchBar.style["outline"] = "none";
+    searchBar.style["border"] = "2px solid red";
+    searchBar.style["color"] = "red";
+    dataList.style["display"] = "none";
+  } else {
+    dataList.style["display"] = "block"; //eşleşme varsa listeyi görüntüle
+  }
+};
+
+loadList(); // sayfa açılınca datalar çekilir
+
+/*
+const showMoreDOM = document.querySelector("#showMore");
+showMoreDOM.addEventListener("click", function () {
+  event.preventDefault();
+  console.log("button a tiklandi");
+}); */
+
+const hey = function (id) {
+  console.log("tiklandi" + id);
+  document.body.style["flex-direction"] = "row";
+  document.body.style["align-items"] = "flex-start";
+  const myLogoDOM = document.getElementById("img-id");
+  myLogoDOM.classList.add("img-new");
+
+  showDataTable(filteredData);
+};
+
+/* bu hiç olmadı 
+const ben = function () {
+  //event.preventDefault(); //bunu yazinca diğre sayfa açılmıyor, linkin işlevi kesilmiş oluyor
+  console.log("calisti");
+  //showDataTable(filteredData);
+  fetch(".././new-page.html")
+    .then((response) => response.text())
+    .then((text) => {
+      const otherDoc =
+        document.implementation.createHTMLDocument("Foo").documentElement;
+      otherDoc.innerHTML = text;
+      //document.querySelector(".element_on_main_page").textContent = otherDoc.querySelector(".awesome_external_element").textContent;
+    });
+};*/
+
+//arama alanı boşsa error kaldırılır
+searchBar.addEventListener("keyup", (e) => {
+  e.target.value === ""
+    ? ((searchBar.style["border-color"] = "black"),
+      (searchBar.style["color"] = "black"),
+      (dataList.style["display"] = "none"))
+    : "";
+});
+
+// ##################### burada kaldım
+
+//let tableOk;
+
+const loadTable = function () {
+  console.log("click");
+  //document.getElementById("searchBar").innerHTML = localStorage.getItem("str");
+};
+
+//console.log(tableOk);
+
+// 6 elemanlık tablo sayısı hesaplandı
+const sizeOfTable = (size) => {
+  console.log(size);
+  let numberOfTable = (size / 6) | 0;
+  if (size % 6 > 0) {
+    numberOfTable++;
+  }
+  //console.log(numberOfTable);
+  return numberOfTable;
+};
+
+const showDataTable = (filteredData) => {
+  console.log("yes");
+  const countTable = sizeOfTable(filteredData.length);
+
+  const tableData = filteredData
+    .slice(0, 6)
+    .map((dt) => {
+      return `
+        <li class="list-item">
+        <div>
+          <h2>${dt[5]} - ${dt[4]}</h2>
+          <p>${dt[0]} - ${dt[3].slice(6, 10)}</p>
+        </div>
+          <h2>Email: ${dt[2]}</h2>
+        </li>
+      `;
+    })
+    .join("");
+
+  dataList.innerHTML = tableData;
+
+  let pageListDOM = document.createElement("li");
+  //pageListDOM.style["list-style-type"] = "none";
+  pageListDOM.innerHTML = `
+    <li class="page-numbers"> 
+      <p>${countTable}</p>
+    </li>
+  `;
+  dataList.append(pageListDOM);
+};
+
