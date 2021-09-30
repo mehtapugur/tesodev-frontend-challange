@@ -50,7 +50,7 @@ img {
 .search-section input {
  width: 50em;
  height: 2.7em;
- margin-top: 2em;
+ margin-top: 1em;
  text-align: center;
  border: 1px solid var(--clr-black2);
  border-radius: 8px;
@@ -97,6 +97,8 @@ ul {
   width: 81.7%;
   border-radius: 8px;
   background-color: #eaeaea;
+  border: 1px solid var(--clr-black2);
+  display: none;
 }
 
 .list-item {
@@ -121,10 +123,13 @@ ul {
   font-size: 1.7em;
 }
 
+.list-item p{
+  font-size: 1.2em;
+}
+
 #showMore {
   /*width: 100%;*/
   list-style-type: none;
-  background-color: bisque;
   display: flex;
   justify-content: center;
   color: var(--clr-primary-black);
@@ -133,6 +138,7 @@ ul {
   font-size: 1.3em;
   line-height: 1.5em;
   padding-top: 2em;
+  padding-bottom: 0.8em;
 }
 
 footer {
