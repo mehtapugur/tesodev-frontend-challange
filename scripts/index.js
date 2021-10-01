@@ -137,8 +137,6 @@ searchBar.addEventListener("keyup", (e) => {
     : "";
 });
 
-// ##################### burada kaldım
-
 //let tableOk;
 
 const loadTable = function () {
@@ -337,9 +335,19 @@ const sizeOfTable = (size) => {
   return numberOfTable;
 };
 
+const countTable = [];
+
+const hesapla = function (size) {
+  for (let i = 0; i < size; i++) {
+    countTable[i] = i;
+  }
+};
+
 const showDataTable = (filteredData) => {
-  console.log("yes");
-  const countTable = sizeOfTable(filteredData.length);
+  //console.log("yes");
+  //const countTable = [sizeOfTable(filteredData.length)];
+  //const countTable = [1, 2];
+  hesapla(sizeOfTable(filteredData.length));
 
   const tableData = filteredData
     .slice(0, 6)
@@ -359,12 +367,15 @@ const showDataTable = (filteredData) => {
   dataList.innerHTML = tableData;
 
   let pageListDOM = document.createElement("li");
+  pageListDOM.style["class"] = "page-numbers";
   //pageListDOM.style["list-style-type"] = "none";
-  pageListDOM.innerHTML = `
-    <li class="page-numbers"> 
-      <p>${countTable}</p>
-    </li>
-  `;
+
+  const tableButtons = countTable
+    .map((item) => {
+      return `<button>${item + 1}</button>`;
+    })
+    .join("");
+
+  pageListDOM.innerHTML = tableButtons;
   dataList.append(pageListDOM);
 };
-
